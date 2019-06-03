@@ -1,0 +1,11 @@
+{
+    "name": "suframe/core",
+    "description": "suframe core",
+    "authors": [
+        {
+            "name": "qian",
+            "email": "330576744@qq.com"
+        }
+    ],
+    "require": {}
+}
