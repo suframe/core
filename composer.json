@@ -1,11 +1,27 @@
 {
-    "name": "suframe/core",
+    "name": "suframe/suframe-core",
     "description": "suframe core",
+    "license": "Apache-2.0",
     "authors": [
         {
             "name": "qian",
             "email": "330576744@qq.com"
         }
     ],
-    "require": {}
+    "autoload": {
+        "psr-4": {
+            "suframe\\core\\": "src"
+        }
+    },
+    "require": {
+        "ext-pcntl": "^7.2",
+        "ext-json": "*",
+        "zendframework/zend-eventmanager": "^3.2",
+        "zendframework/zend-config": "^3.2",
+        "zendframework/zend-config-aggregator": "^1.1",
+        "symfony/console": "^4.3",
+        "symfony/finder": "^4.3",
+        "zendframework/zend-http": "^2.10",
+        "symfony/filesystem": "^4.3"
+    }
 }

@@ -1,0 +1,31 @@
+<?php
+namespace PHPSTORM_META {
+    use suframe\core\components\rpc\SRpcInterface;
+    override( SRpcInterface::route(0),
+        map( [
+            [:paths]
+            'user' => \app\runtime\User::class,
+            'orders' => \app\runtime\Orders::class,
+        ]));
+}
+
+namespace app\runtime;
+
+interface User{
+    /**
+     * @return mixed
+     */
+    public function user();
+}
+interface Orders{
+    /**
+     * @return mixed
+     */
+    public function search2($name, $cond = []);
+}
+
+namespace app\runtime\rpc;
+
+interface UserRpc {
+
+}
