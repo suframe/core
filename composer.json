@@ -23,5 +23,8 @@
         "symfony/finder": "^4.3",
         "zendframework/zend-http": "^2.10",
         "symfony/filesystem": "^4.3"
+    },
+    "require-dev": {
+        "swoole/ide-helper": "@dev"
     }
 }
