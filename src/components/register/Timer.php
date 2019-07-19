@@ -83,6 +83,9 @@ class Timer
     {
         $servers = $this->getConfig()->get('servers');
         $hasChange = false;
+        if(!$servers){
+            return false;
+        }
         //检测
         foreach ($servers as $path => $server) {
             /** @var Config $item */
