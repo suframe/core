@@ -85,7 +85,7 @@ class Client
         foreach ($finder->in($rpcPath) as $file) {
             $class = $namespace . \substr($file, $length + 1, -4);
             if(!class_exists($class)){
-                return false;
+                continue;
             }
             $ref = new ReflectionClass($class);
             $className = $ref->getShortName();
