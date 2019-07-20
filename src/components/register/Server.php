@@ -71,15 +71,24 @@ class Server
         return true;
     }
 
+    /**
+     * 注册rpc
+     * @param $path
+     * @param $rpc
+     * @return bool
+     */
     public function registerRpc($path, $rpc){
         if(!$rpc || (strpos($path, '.') !== false)){
             return false;
         }
-        $savePath = SUMMER_APP_ROOT . 'runtime/rpc' . $path;
+        $rumtimePath = SUMMER_APP_ROOT . 'runtime/rpc';
+        $savePath = $rumtimePath . $path;
         $fs = new Filesystem();
         //删除目录
-        if(!is_dir($savePath)){
+        if(is_dir($savePath)){
             $fs->remove($savePath);
+        } else if(!is_dir($rumtimePath)){
+            $fs->mkdir($rumtimePath, '0755');
         }
         //创建目录
         try {
