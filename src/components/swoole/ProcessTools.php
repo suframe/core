@@ -21,6 +21,7 @@ class ProcessTools{
         if (!@swoole_process::kill($pid, $sig)) {
             return false;
         }
+        return true;
     }
 
 }
