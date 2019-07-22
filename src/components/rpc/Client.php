@@ -7,6 +7,7 @@
 namespace suframe\core\components\rpc;
 
 use suframe\core\components\net\http\Proxy;
+use suframe\core\components\swoole\Context;
 
 class Client
 {
@@ -38,6 +39,10 @@ class Client
     public function __call($name, $arguments)
     {
         $arguments['path'] = '/rpc/' . $this->apiPath . '/' . $name;
+        $request = Context::get('request');
+        if($request && isset($request['get'])){
+            $arguments['x_request_id'] = $request['get']['x_request_id'] ?? '';
+        }
         return Proxy::getInstance()->sendData($this->path, json_encode($arguments));
         // TODO: Implement __call() method.
     }
