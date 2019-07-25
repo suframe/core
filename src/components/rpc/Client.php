@@ -6,7 +6,8 @@
 
 namespace suframe\core\components\rpc;
 
-use suframe\core\components\net\http\Proxy;
+use mysql_xdevapi\Exception;
+use suframe\core\components\net\tcp\Proxy;
 use suframe\core\components\swoole\Context;
 
 class Client
@@ -43,7 +44,11 @@ class Client
         if($request && isset($request['get'])){
             $arguments['x_request_id'] = $request['get']['x_request_id'] ?? '';
         }
-        return Proxy::getInstance()->sendData($this->path, json_encode($arguments));
-        // TODO: Implement __call() method.
+        $data = Proxy::getInstance()->sendData($this->path, json_encode($arguments));
+        $data = new RpcUnPack($data);
+        if($data->get('code') != 200){
+            return null;
+        }
+        return $data->get('data');
     }
 }
