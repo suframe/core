@@ -60,6 +60,9 @@ class TcpStartCommand extends TcpBase
             $config['tcp']['swoole']['log_file'] = $port . ".{$port}.log";
             $config['tcp']['swoole']['pid_file'] = $port . ".{$port}.pid";;
         }
+        if ($host = $input->hasParameterOption(['--watch', '-w'])) {
+            $config['tcp']['server']['host'] = $host;
+        }
     }
 
     /**
@@ -70,6 +73,7 @@ class TcpStartCommand extends TcpBase
         $this->setName('tcp:start')
             ->addOption('host', 'H', InputOption::VALUE_OPTIONAL, 'custom host')
             ->addOption('port', 'P', InputOption::VALUE_OPTIONAL, 'custom port')
+            ->addOption('watch', 'w', null, 'watch files change')
             ->addOption('daemon', 'd', null, 'run server on the background');
     }
 
