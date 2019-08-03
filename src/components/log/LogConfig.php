@@ -11,7 +11,7 @@ class LogConfig
 {
     const TYPE_REQUEST = 'request';
     const TYPE_RPC = 'rpc';
-    const TYPE_SQL = 'SQL';
+    const TYPE_SQL = 'sql';
     const TYPE_EXCEPTION = 'exception';
-    const TYPE_DEBUG = 'DEBUG';
+    const TYPE_DEBUG = 'debug';
 }

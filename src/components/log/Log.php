@@ -2,6 +2,7 @@
 
 namespace suframe\core\components\log;
 
+use suframe\core\components\Config;
 use suframe\core\components\rpc\SRpc;
 use suframe\core\traits\Singleton;
 
@@ -13,16 +14,36 @@ class Log
 
     public function __construct($api)
     {
-        $this->api = $api;
+        $this->api = Config::getInstance()->get('app.log');
     }
 
+    /**
+     * 请求日志
+     * @param $request
+     * @param string $mark
+     * @return bool|void
+     */
     public function request($request, $mark = '')
     {
-        return $this->write(LogConfig::TYPE_REQUEST, $request, $mark);
+        if(!$this->api){
+            return false;
+        }
+        $this->write(LogConfig::TYPE_REQUEST, $request, $mark);
     }
 
+    /**
+     * rpc日志
+     * @param $path
+     * @param $params
+     * @param $call
+     * @param string $mark
+     * @return bool|void
+     */
     public function rpc($path, $params, $call, $mark = '')
     {
+        if(!$this->api){
+            return false;
+        }
         $data = [
             'path' => $path,
             'params' => $params,
@@ -33,20 +54,38 @@ class Log
                 'line' => '',
             ],
         ];
-        return $this->write(LogConfig::TYPE_RPC, $request, $mark);
+        $this->write(LogConfig::TYPE_RPC, $request, $mark);
     }
 
+    /**
+     * sql日志
+     * @param $sql
+     * @param null $time
+     * @param string $mark
+     * @return bool|void
+     */
     public function sql($sql, $time = null, $mark = '')
     {
+        if(!$this->api){
+            return false;
+        }
         $data = [
             'sql' => $sql,
             'time' => $time
         ];
-        return $this->write(LogConfig::TYPE_SQL, $data, $mark);
+        $this->write(LogConfig::TYPE_SQL, $data, $mark);
     }
 
+    /**
+     * @param \Exception $e
+     * @param string $mark
+     * @return bool|void
+     */
     public function exception(\Exception $e, $mark = '')
     {
+        if(!$this->api){
+            return false;
+        }
         $data = [
             'message' => $e->getMessage(),
             'code' => $e->getCode(),
@@ -54,18 +93,23 @@ class Log
             'line' => $e->getLine(),
             'trace' => $e->getTraceAsString(),
         ];
-        return $this->write(LogConfig::TYPE_SQL, $data, $mark);
+        $this->write(LogConfig::TYPE_SQL, $data, $mark);
     }
 
     public function debug($message, $data = [], $mark = '')
     {
+        if(!$this->api){
+            return false;
+        }
         $data['message'] = $message;
-        return $this->write(LogConfig::TYPE_DEBUG, $data, $mark);
+        $this->write(LogConfig::TYPE_DEBUG, $data, $mark);
     }
 
     protected function write($type, $data, $mark = '')
     {
-        return SRpc::route($this->api)->write($type, $data, $mark);
+        go(function () use ($type, $data, $mark){
+            return SRpc::route($this->api)->write($type, $data, $mark);
+        });
     }
 
 }
