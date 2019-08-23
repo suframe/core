@@ -61,7 +61,7 @@ class TcpStartCommand extends TcpBase
             $config['tcp']['swoole']['pid_file'] = $port . ".{$port}.pid";;
         }
         if ($host = $input->hasParameterOption(['--watch', '-w'])) {
-            $config['tcp']['server']['host'] = $host;
+            $config['tcp']['server']['watch'] = $host;
         }
     }
 
