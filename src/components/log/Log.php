@@ -46,13 +46,7 @@ class Log
         }
         $data = [
             'path' => $path,
-            'params' => $params,
-            //调用栈
-            'call' => [
-                'path' => '',
-                'file' => '',
-                'line' => '',
-            ],
+            'params' => $params
         ];
         $this->write(LogConfig::TYPE_RPC, $data, $mark);
     }
