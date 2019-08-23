@@ -54,7 +54,7 @@ class Log
                 'line' => '',
             ],
         ];
-        $this->write(LogConfig::TYPE_RPC, $request, $mark);
+        $this->write(LogConfig::TYPE_RPC, $data, $mark);
     }
 
     /**
