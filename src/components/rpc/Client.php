@@ -39,16 +39,19 @@ class Client
 
     public function __call($name, $arguments)
     {
-        $arguments['path'] = '/rpc/' . $this->apiPath . '/' . $name;
+        $data = [
+            'arguments' => $arguments
+        ];
+        $data['path'] = '/rpc/' . $this->apiPath . '/' . $name;
         $request = Context::get('request');
         if($request && isset($request['get'])){
-            $arguments['x_request_id'] = $request['get']['x_request_id'] ?? '';
+            $data['x_request_id'] = $request['get']['x_request_id'] ?? '';
         }
-        $data = Proxy::getInstance()->sendData($this->path, json_encode($arguments));
-        $data = new RpcUnPack($data);
-        if($data->get('code') != 200){
+        $data = Proxy::getInstance()->sendData($this->path, json_encode($data));
+        $rs = new RpcUnPack($data);
+        if($rs->get('code') != 200){
             return null;
         }
-        return $data->get('data');
+        return $rs->get('data');
     }
 }
