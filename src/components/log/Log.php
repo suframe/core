@@ -12,7 +12,7 @@ class Log
     use Singleton;
     protected $api;
 
-    public function __construct($api)
+    public function __construct()
     {
         $this->api = Config::getInstance()->get('sapps.log');
     }
