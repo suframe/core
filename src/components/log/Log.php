@@ -14,7 +14,7 @@ class Log
 
     public function __construct($api)
     {
-        $this->api = Config::getInstance()->get('app.log');
+        $this->api = Config::getInstance()->get('sapps.log');
     }
 
     /**
