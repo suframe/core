@@ -2,6 +2,7 @@
 
 namespace suframe\core;
 
+use suframe\core\components\Config;
 use suframe\core\components\log\Log;
 use suframe\core\components\rpc\SRpc;
 
@@ -13,6 +14,7 @@ use suframe\core\components\rpc\SRpc;
 class SF
 {
     /**
+     * rpc接口
      * @param $path
      * @return SRpc
      */
@@ -22,11 +24,21 @@ class SF
     }
 
     /**
+     * 日志
      * @return Log
      */
     static public function log()
     {
         return Log::getInstance();
+    }
+
+    /**
+     * 配置
+     * @return Config
+     */
+    static public function config()
+    {
+        return Config::getInstance();
     }
 
 }
