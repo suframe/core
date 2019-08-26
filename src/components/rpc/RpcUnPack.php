@@ -28,7 +28,7 @@ class RpcUnPack
 
     public function get($key = null, $def = null)
     {
-        if($key === null){
+        if ($key === null) {
             return $this->data;
         }
         return $this->data[$key] ?? $def;

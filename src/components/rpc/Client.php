@@ -44,12 +44,12 @@ class Client
         ];
         $sendData['path'] = '/rpc/' . $this->apiPath . '/' . $name;
         $request = Context::get('request');
-        if($request && isset($request['get'])){
+        if ($request && isset($request['get'])) {
             $sendData['x_request_id'] = $request['get']['x_request_id'] ?? '';
         }
         $data = Proxy::getInstance()->sendData($this->path, json_encode($sendData));
         $data = new RpcUnPack($data);
-        if($data->get('code') != 200){
+        if ($data->get('code') != 200) {
             return null;
         }
         return $data->get('data');

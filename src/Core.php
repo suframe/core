@@ -111,7 +111,8 @@ abstract class Core
      * core配置
      * @return Config
      */
-    protected function loadCoreConfig(){
+    protected function loadCoreConfig()
+    {
         $config = Config::getInstance();
         $path = dirname($this->getReflection()->getFileName());
         $config->loadFile($path . '/config/config.php');
@@ -133,10 +134,11 @@ abstract class Core
         }
     }
 
-    protected function registerCommands(){
+    protected function registerCommands()
+    {
         //core命令
         $coreCommands = Config::getInstance()->get('console.coreCommands');
-        if($coreCommands){
+        if ($coreCommands) {
             foreach ($coreCommands as $coreCommand) {
                 $this->getConsole()->registerGroups(
                     __NAMESPACE__ . '\commands\\' . $coreCommand,
@@ -145,14 +147,17 @@ abstract class Core
         }
         //应用命令
         $path = dirname($this->getReflection()->getFileName());
-        if(is_dir($path . '/commands/')){
-            $this->getConsole()->registerGroups($this->getReflection()->getNamespaceName() . '\commands', $path . '/commands/');
+        if (is_dir($path . '/commands/')) {
+            $this->getConsole()->registerGroups($this->getReflection()->getNamespaceName() . '\commands',
+                $path . '/commands/');
         }
     }
 
     protected $reflection;
-    protected function getReflection(){
-        if($this->reflection){
+
+    protected function getReflection()
+    {
+        if ($this->reflection) {
             return $this->reflection;
         }
 

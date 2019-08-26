@@ -1,4 +1,5 @@
 <?php
+
 namespace suframe\core\components\console;
 
 use Symfony\Component\Console\Input\InputArgument;
@@ -31,7 +32,7 @@ class Application extends \Symfony\Component\Console\Application
      */
     public function registerGroups(string $namespace, string $basePath): self
     {
-        $length   = \strlen($basePath);
+        $length = \strlen($basePath);
         $finder = new Finder();
         $finder->name('*Command.php');
         foreach ($finder->in($basePath) as $file) {

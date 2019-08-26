@@ -40,7 +40,7 @@ class TcpStartCommand extends TcpBase
             $app->run($input, $output);
         } catch (\Exception $e) {
             (new SymfonyStyle($input, $output))->warning($e->getMessage());
-        } catch (\Error $e){
+        } catch (\Error $e) {
             (new SymfonyStyle($input, $output))->error($e->getMessage());
         }
     }

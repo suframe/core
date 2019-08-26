@@ -51,7 +51,7 @@ class Out
             'code' => $code,
             'data' => $data,
         ];
-        if($message){
+        if ($message) {
             $rs['message'] = $message;
         }
         $response->write(json_encode($rs));

@@ -14,7 +14,7 @@ class SRpc implements SRpcInterface
      */
     static public function route($path)
     {
-       return Client::getInstance($path);
+        return Client::getInstance($path);
         // TODO: Implement route() method.
     }
 }

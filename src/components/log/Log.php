@@ -25,7 +25,7 @@ class Log
      */
     public function request($request, $mark = '')
     {
-        if(!$this->api){
+        if (!$this->api) {
             return false;
         }
         $this->write(LogConfig::TYPE_REQUEST, $request, $mark);
@@ -41,7 +41,7 @@ class Log
      */
     public function rpc($path, $params, $call, $mark = '')
     {
-        if(!$this->api){
+        if (!$this->api) {
             return false;
         }
         $data = [
@@ -60,7 +60,7 @@ class Log
      */
     public function sql($sql, $time = null, $mark = '')
     {
-        if(!$this->api){
+        if (!$this->api) {
             return false;
         }
         $data = [
@@ -77,7 +77,7 @@ class Log
      */
     public function exception(\Exception $e, $mark = '')
     {
-        if(!$this->api){
+        if (!$this->api) {
             return false;
         }
         $data = [
@@ -92,7 +92,7 @@ class Log
 
     public function debug($message, $data = [], $mark = '')
     {
-        if(!$this->api){
+        if (!$this->api) {
             return false;
         }
         $data['message'] = $message;
@@ -101,7 +101,7 @@ class Log
 
     protected function write($type, $data, $mark = '')
     {
-        go(function () use ($type, $data, $mark){
+        go(function () use ($type, $data, $mark) {
             return SRpc::route($this->api)->write($type, $data, $mark);
         });
     }

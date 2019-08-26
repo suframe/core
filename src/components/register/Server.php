@@ -38,7 +38,8 @@ class Server
      * @return bool
      * @throws \Exception
      */
-    public function register($args){
+    public function register($args)
+    {
         $config = ClientAlias::getInstance()->reloadServer();
         $path = $args['path'];
         $server = $config->get('servers');
@@ -47,9 +48,9 @@ class Server
 
         //唯一key防止重复
         $key = md5($args['ip'] . $args['port']);
-        if(isset($server[$path])){
+        if (isset($server[$path])) {
             //已存在
-            if($server[$path]->get($key)){
+            if ($server[$path]->get($key)) {
                 throw new \Exception('exist');
             }
             $server[$path][$key] = ['ip' => $args['ip'], 'port' => $args['port']];
@@ -58,10 +59,10 @@ class Server
                 $key => ['ip' => $args['ip'], 'port' => $args['port']]
             ];
         }
-        try{
+        try {
             //写入api配置
             ClientAlias::getInstance()->updateLocalFile($server);
-        } catch (\Exception $e){
+        } catch (\Exception $e) {
             return false;
         }
         //通知服务更新
@@ -77,24 +78,27 @@ class Server
      * @param $rpc
      * @return bool
      */
-    public function registerRpc($path, $rpc){
-        if(!$rpc || (strpos($path, '.') !== false)){
+    public function registerRpc($path, $rpc)
+    {
+        if (!$rpc || (strpos($path, '.') !== false)) {
             return false;
         }
         $rumtimePath = SUMMER_APP_ROOT . 'runtime/rpc';
         $savePath = $rumtimePath . $path;
         $fs = new Filesystem();
         //删除目录
-        if(is_dir($savePath)){
+        if (is_dir($savePath)) {
             $fs->remove($savePath);
-        } else if(!is_dir($rumtimePath)){
-            $fs->mkdir($rumtimePath, '0755');
+        } else {
+            if (!is_dir($rumtimePath)) {
+                $fs->mkdir($rumtimePath, '0755');
+            }
         }
         //创建目录
         try {
             $fs->mkdir($savePath, '0755');
         } catch (IOExceptionInterface $e) {
-            echo "An error occurred while creating your directory at ".$e->getPath();
+            echo "An error occurred while creating your directory at " . $e->getPath();
             return false;
         }
 
@@ -130,7 +134,8 @@ EOF;
      * 生成meta文件
      * @return string
      */
-    public function buildRpcMeta(){
+    public function buildRpcMeta()
+    {
         $savePath = SUMMER_APP_ROOT . 'runtime/rpc';
         $finder = new Finder();
         $finder->depth('< 2')->name('*.tpl');
@@ -138,7 +143,7 @@ EOF;
         $interfaces = [];
         foreach ($finder as $file) {
             $name = $file->getPathInfo()->getFilename();
-            if(!isset($interfaces[$name])){
+            if (!isset($interfaces[$name])) {
                 $interfaces[$name] = [];
             }
             $key = $file->getFilenameWithoutExtension();

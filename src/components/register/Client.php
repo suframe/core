@@ -31,18 +31,20 @@ class Client
     {
         $command = $request->post['command'];
         $method = 'command' . ucfirst($command);
-        if(!method_exists($this, $method)){
+        if (!method_exists($this, $method)) {
             throw new Exception('command not found');
         }
         return $this->$method($request);
     }
 
     protected $registerConfig = [];
+
     /**
      * @throws Exception
      */
-    protected function getRegisterConfig(){
-        if(!$this->registerConfig){
+    protected function getRegisterConfig()
+    {
+        if (!$this->registerConfig) {
             $this->registerConfig = Config::getInstance()->get('registerServer');
             if (!$this->registerConfig) {
                 throw new Exception('register server no config');
@@ -72,19 +74,20 @@ class Client
      * @return array|bool
      * @throws \ReflectionException
      */
-    public function registerRpc(){
+    public function registerRpc()
+    {
         $rpcPath = Config::getInstance()->get('app.rpcPath', SUMMER_APP_ROOT . 'rpc');
-        if(!is_dir($rpcPath)){
+        if (!is_dir($rpcPath)) {
             return false;
         }
-        $length   = \strlen($rpcPath);
+        $length = \strlen($rpcPath);
         $finder = new Finder();
         $finder->name('*.php');
         $namespace = Config::getInstance()->get('app.rpcNameSpace', '\app\rpc\\');
         $rpc = [];
         foreach ($finder->in($rpcPath) as $file) {
             $class = $namespace . \substr($file, $length + 1, -4);
-            if(!class_exists($class)){
+            if (!class_exists($class)) {
                 continue;
             }
             $ref = new ReflectionClass($class);
@@ -93,7 +96,7 @@ class Client
             $methods = $ref->getMethods(ReflectionMethod::IS_PUBLIC);
             foreach ($methods as $method) {
                 //参数解析
-                $parameters = array_map(function (ReflectionParameter $value){
+                $parameters = array_map(function (ReflectionParameter $value) {
                     $type = $value->hasType() ? $value->getType()->getName() : null;
                     return [
                         'name' => $value->getName(),
@@ -125,7 +128,7 @@ class Client
         $client->close();
         $rs = json_decode($rs, true);
         $code = $rs['code'] ?? null;
-        if($code !== 200){
+        if ($code !== 200) {
             throw new Exception('update fail');
         }
         $data = $rs['data'] ?? [];
@@ -137,17 +140,18 @@ class Client
      * @return bool
      * @throws Exception
      */
-    public function syncRpc(){
+    public function syncRpc()
+    {
         $config = $this->getRegisterConfig();
         $client = new \Swoole\Coroutine\Http\Client($config['ip'], $config['port']);
         $client->post('/summer/server/syncRpc', []);
         $rs = $client->body;
         $client->close();
         $rs = json_decode($rs, true);
-        if(!$rs){
+        if (!$rs) {
             return false;
         }
-        if(($rs['code'] == 200) && $rs['data']){
+        if (($rs['code'] == 200) && $rs['data']) {
             $file = SUMMER_APP_ROOT . 'config/.phpstorm.meta.php';
             file_put_contents($file, $rs['data']);
             return true;
@@ -159,7 +163,8 @@ class Client
      * 更新本地文件
      * @param mixed $data
      */
-    public function updateLocalFile($data){
+    public function updateLocalFile($data)
+    {
         $file = SUMMER_APP_ROOT . 'config/servers.php';
         $writer = new PhpArray();
         $writer->toFile($file, is_object($data) ? $data->toArray() : $data);
@@ -170,7 +175,8 @@ class Client
     /**
      * @return Config
      */
-    public function reloadServer(){
+    public function reloadServer()
+    {
         $file = SUMMER_APP_ROOT . 'config/servers.php';
         $config = Config::getInstance();
         unset($config['servers']);

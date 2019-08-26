@@ -12,11 +12,10 @@ class Context
     static function get($key)
     {
         $cid = Coroutine::getuid();
-        if ($cid < 0)
-        {
+        if ($cid < 0) {
             return null;
         }
-        if(isset(self::$pool[$cid][$key])){
+        if (isset(self::$pool[$cid][$key])) {
             return self::$pool[$cid][$key];
         }
         return null;
@@ -25,24 +24,24 @@ class Context
     static function put($key, $item)
     {
         $cid = Coroutine::getuid();
-        if ($cid > 0)
-        {
+        if ($cid > 0) {
             self::$pool[$cid][$key] = $item;
         }
 
     }
 
-    static function update($key, $item){
+    static function update($key, $item)
+    {
         $cid = Coroutine::getuid();
         self::updateByCid($cid, $key, $item);
     }
 
-    static function updateByCid($cid, $key, $item){
-        if ($cid < 0)
-        {
+    static function updateByCid($cid, $key, $item)
+    {
+        if ($cid < 0) {
             return null;
         }
-        if(!isset(self::$pool[$cid][$key])){
+        if (!isset(self::$pool[$cid][$key])) {
             return self::$pool[$cid][$key] = $item;
         }
     }
@@ -50,17 +49,17 @@ class Context
     static function delete($key = null)
     {
         $cid = Coroutine::getuid();
-        if ($cid > 0)
-        {
-            if($key){
+        if ($cid > 0) {
+            if ($key) {
                 unset(self::$pool[$cid][$key]);
-            }else{
+            } else {
                 unset(self::$pool[$cid]);
             }
         }
     }
 
-    static function updateBatch($key, $value){
+    static function updateBatch($key, $value)
+    {
         foreach (self::$pool as $cid => $item) {
             echo "update proxys {$cid} &&&&&&&&&&&&&&&&&&&&&&&\n\n\n";
             self::updateByCid($cid, $key, $value);

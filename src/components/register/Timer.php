@@ -42,7 +42,7 @@ class Timer
             return false;
         }
         $timerMs = $this->getConfig()->get('tcp.timerMs', 1000 * 60);
-        $timer = SwooleTimer::tick($timerMs, function (){
+        $timer = SwooleTimer::tick($timerMs, function () {
             static::getInstance()->check();
         });
         $this->timer = [
@@ -83,7 +83,7 @@ class Timer
     {
         $servers = $this->getConfig()->get('servers');
         $hasChange = false;
-        if(!$servers){
+        if (!$servers) {
             return false;
         }
         //检测

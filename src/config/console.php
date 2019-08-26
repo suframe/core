@@ -9,8 +9,8 @@ $logo = <<<EOF
 EOF;
 
 return [
-	'logoText' => $logo,
-	'logoStyle' => 'fg=green;',
-	'version' => '0.0.1',
+    'logoText' => $logo,
+    'logoStyle' => 'fg=green;',
+    'version' => '0.0.1',
     'coreCommands' => []
 ];

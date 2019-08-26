@@ -1,4 +1,5 @@
 <?php
+
 namespace suframe\core\commands;
 
 use suframe\core\components\Config;
@@ -8,7 +9,8 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
-class SummerCommand  extends Command{
+class SummerCommand extends Command
+{
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
@@ -32,7 +34,6 @@ class SummerCommand  extends Command{
     {
         $this->setName('summer')
             ->setDescription('default command')
-            ->addOption('version', 'v', null, 'summer framework version')
-        ;
+            ->addOption('version', 'v', null, 'summer framework version');
     }
 }

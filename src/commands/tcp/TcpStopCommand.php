@@ -21,7 +21,7 @@ class TcpStopCommand extends TcpBase
         $sig = $input->getParameterOption(['--sig', '-s'], SIGTERM);
         $rs = $this->sendSig($sig);
         $io = new SymfonyStyle($input, $output);
-        if($rs !== true){
+        if ($rs !== true) {
             $io->error($rs);
         } else {
             $io->success('tcp stop success');

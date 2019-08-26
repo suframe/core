@@ -5,6 +5,7 @@ namespace suframe\core\components\rpc;
 class RpcPack
 {
     protected $data = [];
+
     public function __construct($path)
     {
         $this->data['path'] = $path;
@@ -16,7 +17,8 @@ class RpcPack
         return $this;
     }
 
-    public function pack(){
+    public function pack()
+    {
         return json_encode($this->data);
     }
 
