@@ -29,7 +29,6 @@ class Proxy
 
     public function __construct()
     {
-        echo "new proxy created\n";
         $this->config = Client::getInstance()->reloadServer()['servers'];
         $this->initPools();
     }
