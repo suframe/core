@@ -152,7 +152,8 @@ class Client
             return false;
         }
         if (($rs['code'] == 200) && $rs['data']) {
-            $file = SUMMER_APP_ROOT . 'config/.phpstorm.meta.php';
+            $path = Config::getInstance()->get('app.configPath', SUMMER_APP_ROOT . 'config' . DIRECTORY_SEPARATOR);
+            $file = $path . '.phpstorm.meta.php';
             file_put_contents($file, $rs['data']);
             return true;
         }
@@ -165,7 +166,8 @@ class Client
      */
     public function updateLocalFile($data)
     {
-        $file = SUMMER_APP_ROOT . 'config/servers.php';
+        $path = Config::getInstance()->get('app.configPath', SUMMER_APP_ROOT . 'config' . DIRECTORY_SEPARATOR);
+        $file = $path . 'servers.php';
         $writer = new PhpArray();
         $writer->toFile($file, is_object($data) ? $data->toArray() : $data);
         $config = Config::getInstance();
@@ -177,7 +179,8 @@ class Client
      */
     public function reloadServer()
     {
-        $file = SUMMER_APP_ROOT . 'config/servers.php';
+        $path = Config::getInstance()->get('app.configPath', SUMMER_APP_ROOT . 'config' . DIRECTORY_SEPARATOR);
+        $file = $path . 'servers.php';
         $config = Config::getInstance();
         unset($config['servers']);
         $config->loadFileByName($file, 'servers');
