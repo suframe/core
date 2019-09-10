@@ -27,7 +27,7 @@ class Server
     public function create(array $config)
     {
         $this->server = $server = new \Swoole\Http\Server($config['server']['listen'], $config['server']['port']);
-        $this->set($config['swoole']);
+        $this->set($config['server']['options']);
         $register = $config['register'] ?? null;
         if ($register) {
             $this->registerPort = $register['port'];

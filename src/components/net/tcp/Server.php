@@ -16,7 +16,7 @@ class Server {
      */
 	public function create(array $config) {
 		$this->server = $server = new \Swoole\Server($config['server']['listen'], $config['server']['port'], SWOOLE_PROCESS, SWOOLE_SOCK_TCP);
-		$this->set($config['swoole']);
+		$this->set($config['server']['options']);
 		return $this->server;
 	}
 
