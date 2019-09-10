@@ -16,7 +16,7 @@ class ProcessTools
     static public function kill($sig = SIGUSR1)
     {
         $config = Config::getInstance();
-        $pidFile = $config->get('tcp.swoole.pid_file');
+        $pidFile = $config->get('tcp.server.options.pid_file');
         if (!is_file($pidFile)) {
             return false;
         }
