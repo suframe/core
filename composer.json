@@ -14,7 +14,6 @@
         }
     },
     "require": {
-        "ext-pcntl": "^7.2",
         "ext-json": "*",
         "zendframework/zend-eventmanager": "^3.2",
         "zendframework/zend-config": "^3.2",
