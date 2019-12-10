@@ -53,10 +53,10 @@ class Server
             if ($server[$path]->get($key)) {
                 throw new \Exception('exist');
             }
-            $server[$path][$key] = ['ip' => $args['ip'], 'port' => $args['port']];
+            $server[$path][$key] = ['ip' => $args['ip'], 'port' => $args['port'], 'rpcPort' => $args['rpcPort'] ?? ''];
         } else {
             $server[$path] = [
-                $key => ['ip' => $args['ip'], 'port' => $args['port']]
+                $key => ['ip' => $args['ip'], 'port' => $args['port'], 'rpcPort' => $args['rpcPort'] ?? '']
             ];
         }
         try {
